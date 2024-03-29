@@ -1,0 +1,10 @@
+package arrays
+
+modules = Main
+main = Main
+
+depends = contrib
+
+executable = mypkg
+
+sourcedir = "src"

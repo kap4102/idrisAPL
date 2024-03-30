@@ -34,10 +34,12 @@ namespace Array
     Data : {s : Shape} -> (d : Vect (product s) a) -> Array s a
 
   -- This i a scala value
+  export
   exampleArray0 : Array [1] Double
   exampleArray0 = Data [7.0]
 
   -- This is a 2x2 Matrix
+  export
   exampleArray1 : Array [2,2] Double
   exampleArray1 = Data [1.0, 0.0, 0.0, 1.0]
 
@@ -138,25 +140,32 @@ namespace Array
   -- exampleIndexing : Double
   -- exampleIndexing = index exampleArray1 [0, 1]
 
+  export
   pointwise : (a -> b) -> Array s a -> Array s b
   pointwise f (Data d) = Data $ map f d
 
+  export
   ravel : Array s a -> Vect (product s) a
   ravel (Data d) = d
 
+  export
   bound : {s : Shape} -> Array s a -> Nat
   bound {s} (Data d) = product s
 
+  export
   rank : {s : Shape} -> Array s _ -> Nat
   rank {s} _ = length s
 
+  export
   shape : {s : Shape} -> Array s _ -> Shape
   shape {s} _ = s
 
+  export
   eachFZipApp : Vect n (a -> b) -> Vect n a -> Vect n b
   eachFZipApp [] [] = []
   eachFZipApp (f :: fs) (x :: xs) = (f x) :: eachFZipApp fs xs
 
+  export
   eachF : Array s (tA -> tW) -> Array s tA -> Array s tW
   eachF (Data fs) (Data d) = Data $ eachFZipApp fs d
 
@@ -167,11 +176,13 @@ namespace Array
   -- prf [x]       = Refl
   -- prf (x :: xs) = ?rhs2
 
+  export
   zipConcat : (Vect n t) -> (Vect n t) -> (Vect (n*2) t)
   zipConcat [] [] = []
   zipConcat (x :: xs) (y :: ys) = x :: y :: zipConcat xs ys
 
 
+  export
   eachD : {t : Type}
        -> {s : Shape}
        -> {auto prf : Vect (mult (foldl (\acc, elem => mult acc elem) 1 s)              2) t
@@ -201,6 +212,7 @@ namespace Array
   --            ->       Vect (foldl (\acc, elem => mult acc elem) (plus (plus n m) 0) s) a
   -- appendFirst dA dW = ?appendFirst_rhs
 
+  export
   concatenate : {dA : Vect (product (n::s)) a}
              -> {dW : Vect (product (m::s)) a}
              -> {auto appendFirstPrf : Vect (plus (foldl (\acc, elem => mult acc elem) (plus n 0) s)
